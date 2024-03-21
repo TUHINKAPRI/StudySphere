@@ -1,11 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { linkData } from "../../data/navbar-links";
 import { BsChevronDown } from "react-icons/bs";
-import { useState } from "react";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllCategory } from "../../services/slices/categorySlice";
 function Navbar() {
+  const dispatch = useDispatch();
+  const { categories, isLoading } = useSelector((state) => state.categories);
   const location = useLocation();
-  const [remove ,setRemove]=useState(false)
+  useEffect(() => {
+    dispatch(fetchAllCategory());
+  }, []);
   return (
     <div
       className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
@@ -25,14 +30,31 @@ function Navbar() {
                       {ele.title}
                       <BsChevronDown className="mt-1 hover:" />
                     </div>
+                    <div
+                      className="dropdown-content ms-14"
+                      style={{
+                        width: "0",
+                        height: "0",
+                        "border-left": "10px solid transparent",
+                        "border-right": "10px solid transparent",
+                        "border-bottom": "10px solid rgb(15 23 42)",
+                      }}
+                    ></div>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                      className="dropdown-content z-[1] mt-2 menu p-2 shadow bg-base-100 rounded-xl w-52"
                     >
-                      <li>
-                        <a>Item 1</a>
-                      </li>
-                      
+                      {isLoading ? (
+                        <div>Loading</div>
+                      ) : (
+                        <>
+                          {categories?.map((ele, index) => (
+                            <li key={index}>
+                              <Link>{ele.name}</Link>
+                            </li>
+                          ))}
+                        </>
+                      )}
                     </ul>
                   </div>
                 ) : (
