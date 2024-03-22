@@ -19,7 +19,7 @@ function Navbar() {
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         <div>StudySphere</div>
-
+        
         <div className="flex gap-6">
           {linkData?.map((ele, index) => {
             return (
@@ -79,7 +79,7 @@ function Navbar() {
               Signup
             </button>
           </Link>
-          <Link to="/login">
+          <Link to="/signin">
             <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[6px] text-richblack-100">
               Login
             </button>
@@ -91,3 +91,7 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
+
+
