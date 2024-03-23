@@ -25,7 +25,7 @@ const categorySlice = createSlice({
       })
       .addCase(fetchAllCategory.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.categories = payload.categories;
+        state.categories = payload?.categories;
       });
   },
 });

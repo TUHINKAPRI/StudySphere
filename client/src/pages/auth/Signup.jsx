@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
-import signImg from "../assets/Images/signup.webp";
+import signImg from "../../assets/Images/signup.webp";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 function Signup() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [check, setCheck] = useState();
   const submitHandler = (data) => {
-    console.log(data);
+    console.log({ ...data, accoutType: check });
+  };
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(!isChecked);
+    setCheck(e.target.checked ? "Instractor" : "Student");
   };
   return (
     <div>
@@ -52,6 +61,30 @@ function Signup() {
             </div>
             <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4" />
           </div>
+          <div className=" flex mt-2 justify-center">
+            <label className="themeSwitcherTwo shadow-card relative inline-flex cursor-pointer select-none items-center justify-center bg-richblack-700 p-1 rounded-md">
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              />
+              <span
+                className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
+                  !isChecked ? "text-primary bg-[#070c1b]" : "text-richblue-25"
+                }`}
+              >
+                Student
+              </span>
+              <span
+                className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
+                  isChecked ? "text-primary bg-[#070c1b]" : "text-richblue-25"
+                }`}
+              >
+                Instructor
+              </span>
+            </label>
+          </div>
           <div>
             {/* form */}
             <form onSubmit={handleSubmit(submitHandler)}>
@@ -59,7 +92,7 @@ function Signup() {
                 <div className="mt-2">
                   <label
                     className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
-                    htmlFor="LoggingEmailAddress"
+                    htmlFor="firstName"
                   >
                     <div className="flex justify-between">
                       <span>FirstName</span>
@@ -69,7 +102,7 @@ function Signup() {
                     </div>
                   </label>
                   <input
-                    id="LoggingEmailAddress"
+                    id="firstName"
                     {...register("firstName", { required: true })}
                     className="block w-full px-4 py-2 text-gray-700 bg-richblack-800 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                     type="text"
@@ -78,7 +111,7 @@ function Signup() {
                 <div className="mt-2">
                   <label
                     className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
-                    htmlFor="LoggingEmailAddress"
+                    htmlFor="lastName"
                   >
                     <div className="flex justify-between">
                       <span>LastName</span>
@@ -88,7 +121,7 @@ function Signup() {
                     </div>
                   </label>
                   <input
-                    id="LoggingEmailAddress"
+                    id="lastName"
                     {...register("lastName", { required: true })}
                     className="block w-full px-4 py-2 text-gray-700 bg-richblack-800 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                     type="text"
@@ -179,7 +212,6 @@ function Signup() {
         <div className="flex justify-end items-center  ">
           <img src={signImg} alt="SignIn image" className="w-9/12 rounded" />
         </div>
-       
       </div>
     </div>
   );

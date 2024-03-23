@@ -1,15 +1,25 @@
-import { Link } from "react-router-dom";
-import signImg from "../assets/Images/signup.webp";
+import { Link, useNavigate } from "react-router-dom";
+import signImg from "../../assets/Images/signup.webp";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { signin } from "../../services/slices/authSlice";
+
 function Signin() {
+  const dispatch = useDispatch();
+  const navigate=useNavigate()
+  const { isLoading,user,redirectTo } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const submitHandler = (data) => {
-    console.log(data);
+    dispatch(signin(data));
   };
+  if(user){
+    navigate(`${redirectTo}`)
+    return 
+  }
   return (
     <div>
       <div className="flex w-full max-w-sm mx-auto overflow-hidden  rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
@@ -103,8 +113,11 @@ function Signin() {
                 </a>
               </div>
               <div className="mt-6">
-                <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-richblack-700 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                  Sign In
+                <button className=" btn w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-richblack-700 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+                  {isLoading ? (
+                    <span className="loading  loading-spinner text-neutral loading-sm mx-2"></span>
+                  ) : null}
+                  SignIn
                 </button>
               </div>
             </form>
