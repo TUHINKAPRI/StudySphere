@@ -6,6 +6,7 @@ import Navbar from "./components/common/Navbar";
 import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import VerifyOtp from "./pages/auth/VerifyOtp";
+import CatelogPage from "./pages/CatelogPage";
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path='/signin' element={<Signin />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/verify-otp' element={<VerifyOtp />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/category/:catelogId" element={<CatelogPage />} />
       </Routes>
     </div>
   );

@@ -54,28 +54,27 @@ const authSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(payload?.data?.user));
         state.redirectTo = "/";
       })
-      .addCase(signup.pending,(state)=>{
-        state.isLoading=true
-        state.redirectTo=null
+      .addCase(signup.pending, (state) => {
+        state.isLoading = true;
+        state.redirectTo = null;
       })
-      .addCase(signup.fulfilled,(state,{payload})=>{
-        state.isLoading=false;
-        if(!payload?.data.success){
-          toast.error(payload?.data?.message)
-          return 
+      .addCase(signup.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (!payload?.data.success) {
+          toast.error(payload?.data?.message);
+          return;
         }
-        toast.success(payload?.data?.message)
-        state.redirectTo='/signin'
+        toast.success(payload?.data?.message);
+        state.redirectTo = "/signin";
       })
       .addCase(getOtp.pending, (state) => {
         state.isLoading = true;
-        state.error=null;
-        state.redirectTo=null
+        state.error = null;
+        state.redirectTo = null;
       })
       .addCase(getOtp.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.redirectTo = "/verify-otp";
-        console.log(payload);
         if (payload?.data?.success) {
           toast.success(payload?.data?.message);
         } else {

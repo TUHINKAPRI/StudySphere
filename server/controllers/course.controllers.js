@@ -81,9 +81,14 @@ exports.createCourse = async (req, res) => {
   }
 };
 exports.getAllCourses = async (req, res) => {
+  console.log(req.query)
   try {
-    const course = await Course.find({}).populate("instructor");
-    res.status(200).josn({
+  const filter={}
+    if(req.query.category){
+      filter.category=req.query.category
+    }
+    const course = await Course.find(filter).populate("instructor");
+    res.status(200).json({
       success: true,
       message: "Course fetch successfully",
       course,
@@ -91,7 +96,7 @@ exports.getAllCourses = async (req, res) => {
   } catch (err) {
     console.log(err.message);
     res.status(500).json({
-      success: flase,
+      success: false,
       message: err.message,
     });
   }

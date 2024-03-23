@@ -53,7 +53,7 @@ function Navbar() {
                         <>
                           {categories?.map((ele, index) => (
                             <li key={index}>
-                              <Link>{ele.name}</Link>
+                              <Link to={`/category/${ele._id}`}>{ele.name}</Link>
                             </li>
                           ))}
                         </>
