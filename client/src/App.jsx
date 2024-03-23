@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/common/Navbar";
 import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
+import VerifyOtp from "./pages/auth/VerifyOtp";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path='/signin' element={<Signin />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/verify-otp' element={<VerifyOtp />} />
       </Routes>
     </div>
   );

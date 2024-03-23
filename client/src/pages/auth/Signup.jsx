@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import signImg from "../../assets/Images/signup.webp";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getOtp, getUserFormData } from "../../services/slices/authSlice";
 function Signup() {
+  const dispatch = useDispatch();
+  const { isLoading, redirectTo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -10,7 +15,9 @@ function Signup() {
   } = useForm();
   const [check, setCheck] = useState();
   const submitHandler = (data) => {
-    console.log({ ...data, accoutType: check });
+    console.log(data.email);
+    dispatch(getUserFormData({ ...data, accountType: check?(check):('Student') }));
+    dispatch(getOtp({ email: data?.email }));
   };
 
   const [isChecked, setIsChecked] = useState(false);
@@ -19,6 +26,10 @@ function Signup() {
     setIsChecked(!isChecked);
     setCheck(e.target.checked ? "Instractor" : "Student");
   };
+
+  if (redirectTo) {
+    navigate(`${redirectTo}`);
+  }
   return (
     <div>
       <div className="flex w-full max-w-sm mx-auto overflow-hidden  rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
@@ -192,7 +203,10 @@ function Signup() {
                 />
               </div>
               <div className="mt-4">
-                <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-richblack-700 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+                <button className="w-full btn px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-richblack-700 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+                  {isLoading && (
+                    <span className="loading loading-spinner"></span>
+                  )}
                   Sign Up
                 </button>
               </div>

@@ -3,10 +3,15 @@ const Otp = require("../models/OTP");
 const Profile = require("../models/profile.model");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
-const jwt=require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 exports.sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
+    if (!email) {
+      return res.status.json({
+        message: "Email is required",
+      });
+    }
     const findEmail = await User.findOne({ email: email });
     if (findEmail) {
       return res.status(400).json({
@@ -48,7 +53,15 @@ exports.signup = async (req, res) => {
       accountType,
       otp,
     } = req.body;
-    if (!firstName || !lastName || !email || !password || !otp || !accountType) {
+    console.log(req.body)
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !otp ||
+      !accountType
+    ) {
       return res.status(403).json({
         success: false,
         message: "All fields are required",
