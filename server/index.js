@@ -12,9 +12,11 @@ const userRouter = require("./routes/user.routes");
 const profileRouter = require("./routes/profile.routes");
 const courseRouter = require("./routes/course.routes");
 const paymentRouter = require("./routes/payments.routes.js");
+const { dummyuserdata, dummycoursedata } = require("./config/dummyData.js");
 connectToDb();
 connectToCloudinary();
-
+// dummyuserdata()
+// dummycoursedata()
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());

@@ -2,20 +2,19 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryCourse } from "../services/slices/categorySlice";
 import { Link, useParams } from "react-router-dom";
-import Caurosule from "../components/common/Caurosule";
-
+import CourseCard from "../components/core/course/CourseCard";
+import Footer from '../components/common/Footer'
 function CatelogPage() {
   const dispatch = useDispatch();
   const { catelogId } = useParams();
   const { categoriesCourse } = useSelector((state) => state.categories);
-  console.log(categoriesCourse);
   useEffect(() => {
     dispatch(fetchCategoryCourse({ id: catelogId }));
   }, []);
   return (
-    <div>
+    <div className="">
       <div className=" box-content bg-richblack-800 px-4">
-        <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
+        <div className="mx-auto flex min-h-[260px] w-11/12  flex-col justify-center gap-4 lg:max-w-maxContent ">
           <div className="text-sm breadcrumbs">
             <ul>
               <li>
@@ -35,12 +34,23 @@ function CatelogPage() {
           </p>
         </div>
       </div>
-      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
-        <div className="section_heading">Courses to get you started</div>
-        <div className="w-11/12 mx-auto">
-          <Caurosule />
+      <div className=" mx-auto box-content   w-11/12 px-4 py-8 ">
+        <h1 className="text-3xl mb-3">Courses to get you started</h1>
+        <div className="w-11/12 flex justify-between gap-3 flex-wrap mx-auto">
+          {categoriesCourse?.map((ele, i) => {
+            return <CourseCard course={ele} key={i} />;
+          })}
         </div>
       </div>
+      <div className=" mx-auto box-content   w-11/12 px-4 py-8 ">
+        <h1 className="text-3xl">Top selling course</h1>
+        <div className="w-11/12 flex justify-between gap-3 flex-wrap mx-auto">
+          {/* {categoriesCourse?.map((ele, i) => {
+            return <CourseCard course={ele} key={i} />;
+          })} */}
+        </div>
+      </div>
+      <Footer/>
     </div>
   );
 }

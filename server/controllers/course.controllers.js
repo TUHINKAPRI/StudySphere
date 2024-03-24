@@ -87,7 +87,7 @@ exports.getAllCourses = async (req, res) => {
     if(req.query.category){
       filter.category=req.query.category
     }
-    const course = await Course.find(filter).populate("instructor");
+    const course = await Course.find(filter).populate("instructor").populate('category');
     res.status(200).json({
       success: true,
       message: "Course fetch successfully",
