@@ -7,6 +7,7 @@ import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import VerifyOtp from "./pages/auth/VerifyOtp";
 import CatelogPage from "./pages/CatelogPage";
+import SingleCoursePage from "./pages/SingleCoursePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/category/:catelogId" element={<CatelogPage />} />
+        <Route path="/course/:courseId" element={<SingleCoursePage />} />
       </Routes>
     </div>
   );
