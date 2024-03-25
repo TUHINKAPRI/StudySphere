@@ -21,6 +21,7 @@ function App() {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/category/:catelogId" element={<CatelogPage />} />
         <Route path="/course/:courseId" element={<SingleCoursePage />} />
+        {/* <Route path='/dashboard/:dashboardId' element={<DashboardPage />} /> */}
       </Routes>
     </div>
   );

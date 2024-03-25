@@ -144,6 +144,16 @@ function Navbar() {
                 <li className="flex"></li>
                 <li className="mx-2">
                   <Link>
+                    My Cart
+                  </Link>
+                </li>
+                <li className="mx-2">
+                  <Link>
+                    Wishlist
+                  </Link>
+                </li>
+                <li className="mx-2">
+                  <Link>
                     Dashboard
                   </Link>
                 </li>
