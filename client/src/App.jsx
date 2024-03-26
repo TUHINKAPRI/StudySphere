@@ -8,6 +8,9 @@ import Signup from "./pages/auth/Signup";
 import VerifyOtp from "./pages/auth/VerifyOtp";
 import CatelogPage from "./pages/CatelogPage";
 import SingleCoursePage from "./pages/SingleCoursePage";
+import Dashboard from "./pages/Dashboard";
+import MyProfile from "./components/core/dashboard/MyProfile";
+import Learning from "./components/core/dashboard/Learning";
 
 function App() {
   return (
@@ -21,7 +24,11 @@ function App() {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/category/:catelogId" element={<CatelogPage />} />
         <Route path="/course/:courseId" element={<SingleCoursePage />} />
-        {/* <Route path='/dashboard/:dashboardId' element={<DashboardPage />} /> */}
+        <Route   element={<Dashboard/>} >
+          <Route path='/dashboard/my-profile' element={<MyProfile/>}/>
+          <Route path='/dashboard/my-learning' element={<Learning/>}/>
+          
+        </Route>
       </Routes>
     </div>
   );
