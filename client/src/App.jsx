@@ -11,10 +11,21 @@ import SingleCoursePage from "./pages/SingleCoursePage";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
 import Learning from "./components/core/dashboard/Learning";
+import Wishlist from "./components/core/dashboard/Wishlist";
+import AccountInfo from "./components/core/dashboard/AccountInfo";
+import { useSelector } from "react-redux";
+import Instructor from "./components/core/dashboard/instructorDashboard/Instructor";
+import AddCourse from "./components/core/dashboard/instructorDashboard/AddCourse";
+import EditCourse from "./components/core/dashboard/instructorDashboard/EditCourse";
+
+import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
+import MyCourses from "./components/core/dashboard/instructorDashboard/MyCourses";
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   return (
-    <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-Inter">
+    <div className="w-screen min-h-screen bg-richblack-900 font-Inter">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -24,10 +35,31 @@ function App() {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/category/:catelogId" element={<CatelogPage />} />
         <Route path="/course/:courseId" element={<SingleCoursePage />} />
-        <Route   element={<Dashboard/>} >
-          <Route path='/dashboard/my-profile' element={<MyProfile/>}/>
-          <Route path='/dashboard/my-learning' element={<Learning/>}/>
-          
+        <Route element={<Dashboard />}>
+          <Route path="/dashboard/my-profile" element={<MyProfile />} />
+          <Route path="/dashboard/account-info" element={<AccountInfo />} />
+          {user?.accountType === "Student" && (
+            <>
+              {" "}
+              <Route path="/dashboard/my-learning" element={<Learning />} />
+              <Route path="/dashboard/wishlist" element={<Wishlist />} />
+              <Route
+                path="/dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+            </>
+          )}
+          {user?.accountType === "Instructor" && (
+            <>
+              <Route path="/dashboard/instructor" element={<Instructor />} />
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+              <Route path="dashboard/mycourses" element={<MyCourses />} />
+              <Route
+                path="dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              />
+            </>
+          )}
         </Route>
       </Routes>
     </div>

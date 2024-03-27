@@ -122,8 +122,8 @@ function Navbar() {
               </div>
             </div>
             {/* profile */}
-            <div className="dropdown dropdown-end">
-              <div
+            <details className="dropdown dropdown-end">
+              <summary
                 tabIndex={0}
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
@@ -131,7 +131,7 @@ function Navbar() {
                 <div className="w-10 rounded-full">
                   <img alt="Profile" src={user?.image} />
                 </div>
-              </div>
+              </summary>
               <ul
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
@@ -148,12 +148,12 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className="mx-2">
-                  <Link>
+                  <Link to='/dashboard/wishlist'>
                     Wishlist
                   </Link>
                 </li>
                 <li className="mx-2">
-                  <Link>
+                  <Link to='dashboard/my-profile'>
                     Dashboard
                   </Link>
                 </li>
@@ -163,7 +163,7 @@ function Navbar() {
                 </button>
                 </li>
               </ul>
-            </div>
+            </details>
           </div>
         ) : (
           <div className="flex gap-4">

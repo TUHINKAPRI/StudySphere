@@ -4,7 +4,7 @@ exports.auth = async (req, res, next) => {
   try {
     const token = req.headers["x-access-token"] || req.cookies.token;
     if (!token) {
-      return res.satatus(400).json({
+      return res.status(400).json({
         success: false,
         message: "Token is not provided",
       });

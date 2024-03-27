@@ -1,43 +1,39 @@
+import Footer from "@/components/common/Footer";
+import Sidebar from "@/components/core/dashboard/Sidebar";
 import { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+
+import { Outlet, useLocation } from "react-router-dom";
 
 function Dashboard() {
   const location = useLocation();
-  const [currentPath, setCurerentPath] = useState();
+  const [path, setPath] = useState();
+
+  console.log(path);
   useEffect(() => {
-    const path = location.pathname.split("/");
-    setCurerentPath(path[path.length - 1]);
+    setPath(
+      location?.pathname?.split("/")[location.pathname?.split("/")?.length - 1]
+    );
   }, [location.pathname]);
   return (
-    <div className="w-full">
-      <div className="bg-richblack-800 w-full   h-[150px]">
-        <div className="max-w-6xl pt-10   mx-auto">
-          <h1 className="text-4xl font-bold mb-5">Dashboard</h1>
-          <div className="font-bold text-sm flex gap-4 mt-9">
-            <Link
-              to="/dashboard/my-profile"
-              className={currentPath === "my-profile" ? "text-blue-400" : null}
-            >
-              {" "}
-              My profile
-            </Link>
-            <NavLink
-              to="/dashboard/my-learning  "
-              className={currentPath === "my-learning" ? "text-blue-400" : null}
-            >
-              My Learning
-            </NavLink>
-            <Link
-              to="/dashboard/wishlist"
-              className={currentPath === "wishlist" ? "text-blue-400" : null}
-            >
-              Wishlist
-            </Link>
+    <div>
+      <div className=" max-w-6xl mt-6 min-h-screen border mx-auto grid grid-cols-[215px,auto] ">
+        <div className="border-e">
+          <Sidebar />
+        </div>
+        <div>
+          <div className="h-[70px] border-b-[1px]">
+            <div className="text-center mt-5 text-2xl font-bold">
+              {path==='account-info'&& <>Account Details</>}
+              {path==='my-profile'&& <>Your Profile</>}
+              {path==='mycourse'&& <>Your Course</>}
+              {path==='wishlist'&& <>Wishlist</>}
+            </div>
           </div>
+          <Outlet />
         </div>
       </div>
-      <div>
-        <Outlet />
+      <div className="mt-10">
+        <Footer />
       </div>
     </div>
   );

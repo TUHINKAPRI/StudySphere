@@ -2,25 +2,24 @@ const { default: mongoose } = require("mongoose");
 const Profile = require("../models/profile.model");
 const User = require("../models/user.model");
 const { imageUploader } = require("../utils/imageUploader");
+const Course = require("../models/course");
+
 exports.updateProfile = async (req, res) => {
   try {
-    const { dateOfBirth = "", gender = "", contactNumber, about } = req.body;
+    const { dateOfBirth , gender , contactNumber, about } = req.body;
     const userId = req.user._id;
-    if (!contactNumber || !about) {
-      return res.status(400).json({
-        success: false,
-        message: "Both fields are required",
-      });
-    }
+    // if (!contactNumber || !about) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Both fields are required",
+    //   });
+    // }
     const userDetails = await User.findOne({ _id: userId });
     const updatedProfile = await Profile.findByIdAndUpdate(
       { _id: userDetails.aditionalDetails },
       {
         $set: {
-          contactNumber,
-          dateOfBirth,
-          about,
-          gender,
+          ...req.body
         },
       },
       { new: true }
@@ -38,6 +37,7 @@ exports.updateProfile = async (req, res) => {
     });
   }
 };
+
 
 exports.deletedAccount = async (req, res) => {
   try {
@@ -92,6 +92,7 @@ exports.getProfileDetails = async (req, res) => {
 
 exports.updateProfilePicture = async (req, res) => {
   try {
+    console.log(req.files)
     const { profilePicture } = req.files;
     const userId = req.user._id;
     const link = await imageUploader(profilePicture);
@@ -117,3 +118,30 @@ exports.updateProfilePicture = async (req, res) => {
     });
   }
 };
+
+
+exports.instuctorDashboard=async(req,res)=>{
+  try{
+    const allCourses=await Course.find({instructor:req.user._id})
+    const addSomeOnCourse= allCourses?.map((course)=>{
+      const totalStudent=0;
+      const totalAmount=0;
+      const details={
+        course:course,
+        totalStudent:course?.studentJoined?.length,
+        totalAmount:totalStudent*course?.price
+      }
+      return details
+    })
+  res.status(200).json({
+    success:true,
+    data:addSomeOnCourse
+  })
+  }catch(err){
+    console.log(err)
+    res.status(500).json({
+      success:false,
+      message:err
+    })
+  }
+}

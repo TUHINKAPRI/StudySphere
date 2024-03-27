@@ -17,6 +17,9 @@ export const getOtp = createAsyncThunk("getOtp", async (value) => {
   return res;
 });
 
+
+
+
 const initialState = {
   isLoading: false,
   user: localStorage.getItem("user")
@@ -80,7 +83,8 @@ const authSlice = createSlice({
         } else {
           toast.error(payload?.data?.message);
         }
-      });
+      })
+      
   },
 });
 
