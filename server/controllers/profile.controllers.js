@@ -6,7 +6,7 @@ const Course = require("../models/course");
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { dateOfBirth , gender , contactNumber, about } = req.body;
+    const { dateOfBirth, gender, contactNumber, about } = req.body;
     const userId = req.user._id;
     // if (!contactNumber || !about) {
     //   return res.status(400).json({
@@ -19,7 +19,7 @@ exports.updateProfile = async (req, res) => {
       { _id: userDetails.aditionalDetails },
       {
         $set: {
-          ...req.body
+          ...req.body,
         },
       },
       { new: true }
@@ -37,7 +37,6 @@ exports.updateProfile = async (req, res) => {
     });
   }
 };
-
 
 exports.deletedAccount = async (req, res) => {
   try {
@@ -67,14 +66,15 @@ exports.getProfileDetails = async (req, res) => {
     const userDetails = await User.aggregate([
       {
         $match: { _id: id },
-      },{
-        $lookup:{
-          from:"profiles",
-          localField:"aditionalDetails",
-          foreignField:"_id",
-          as:"aditionalDetails"
-        }
-      }
+      },
+      {
+        $lookup: {
+          from: "profiles",
+          localField: "aditionalDetails",
+          foreignField: "_id",
+          as: "aditionalDetails",
+        },
+      },
     ]);
     res.status(200).json({
       success: true,
@@ -82,7 +82,7 @@ exports.getProfileDetails = async (req, res) => {
       data: userDetails,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({
       success: false,
       message: err,
@@ -92,7 +92,7 @@ exports.getProfileDetails = async (req, res) => {
 
 exports.updateProfilePicture = async (req, res) => {
   try {
-    console.log(req.files)
+    console.log(req.files);
     const { profilePicture } = req.files;
     const userId = req.user._id;
     const link = await imageUploader(profilePicture);
@@ -119,29 +119,40 @@ exports.updateProfilePicture = async (req, res) => {
   }
 };
 
-
-exports.instuctorDashboard=async(req,res)=>{
-  try{
-    const allCourses=await Course.find({instructor:req.user._id})
-    const addSomeOnCourse= allCourses?.map((course)=>{
-      const totalStudent=0;
-      const totalAmount=0;
-      const details={
-        course:course,
-        totalStudent:course?.studentJoined?.length,
-        totalAmount:totalStudent*course?.price
+exports.instuctorDashboard = async (req, res) => {
+  try {
+    const allCourses = await Course.find({ instructor: req.user._id });
+    const addSomeOnCourse = allCourses?.map((course) => {
+      const totalStudent = 0;
+      const totalAmount = 0;
+      const details = {
+        course: course,
+        totalStudent: course?.studentJoined?.length,
+        totalAmount: totalStudent * course?.price,
+      };
+      return details;
+    });
+    const totalAmountOfInstructor = addSomeOnCourse?.reduce(
+      (acc, curr) => acc + curr?.totalAmount,
+      0
+    );
+    const totalStudentOfInstructor = addSomeOnCourse?.reduce(
+      (acc, curr) => acc + curr?.totalStudent,
+      0
+    );
+    res.status(200).json({
+      success: true,
+      data: {
+        course:addSomeOnCourse,
+      totalAmountOfInstructor,
+      totalStudentOfInstructor,
       }
-      return details
-    })
-  res.status(200).json({
-    success:true,
-    data:addSomeOnCourse
-  })
-  }catch(err){
-    console.log(err)
+    });
+  } catch (err) {
+    console.log(err);
     res.status(500).json({
-      success:false,
-      message:err
-    })
+      success: false,
+      message: err,
+    });
   }
-}
+};

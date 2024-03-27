@@ -31,7 +31,6 @@ function Sidebar() {
       path: "dashboard/mycourses",
       accountType: "Instructor",
     },
-    
   ];
   return (
     <div className="container">
@@ -52,42 +51,23 @@ function Sidebar() {
       </div>
       <div className=" font-semibold  mt-3">
         {sidebarNavLink?.map((ele) => {
-         if(ele?.accountType==='All' || ele?.accountType===user?.accountType){
+          if (
+            ele?.accountType === "All" ||
+            ele?.accountType === user?.accountType
+          ) {
             return (
               <>
-                <NavLink to={`${ele?.path}`} className="flex   items-center hover:bg-richblack-500">
-                <span className="px-4 py-1">{ele?.name}</span>
+                <NavLink
+                  to={`${ele?.path}`}
+                  className="flex   items-center hover:bg-richblack-500"
+                >
+                  <span className="px-4 py-1">{ele?.name}</span>
                 </NavLink>
               </>
-            )
-         }
+            );
+          }
         })}
 
-        {/* <NavLink
-          to="/dashboard/my-profile"
-          className="flex   items-center hover:bg-richblack-500"
-        >
-          <span className="px-4 py-1">Profile</span>
-        </NavLink>
-        <NavLink
-          to="/dashboard/enrolled-courses"
-          className="flex   items-center hover:bg-richblack-500"
-        >
-          <span className="px-4 py-1">Enrolled courses</span>
-        </NavLink>
-
-        <NavLink
-          to="/dashboard/account-info"
-          className="flex   items-center hover:bg-richblack-500"
-        >
-          <span className="px-4 py-1">Accout info</span>
-        </NavLink>
-        <NavLink
-          to="/dashboard/wishlist"
-          className="flex   items-center hover:bg-richblack-500"
-        >
-          <span className="px-4 py-1">Wishlist</span>
-        </NavLink> */}
         <div className="flex  font-semibold  items-center hover:bg-richblack-500">
           <span className="px-4 py-1">Close account</span>
         </div>

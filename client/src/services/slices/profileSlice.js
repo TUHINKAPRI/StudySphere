@@ -20,9 +20,17 @@ export const updateProfilePicture = createAsyncThunk(
   }
 );
 
+export const instructorDashboardInfo = createAsyncThunk(
+  "instructorDashboardInfo",
+  async () => {
+    return await axiosInstance.get("/profile/instructorDashboard");
+  }
+);
+
 const initialState = {
   isLoading: false,
   profileData: null,
+  instructorData: null,
 };
 
 const profileSlice = createSlice({
@@ -55,10 +63,21 @@ const profileSlice = createSlice({
       })
       .addCase(updateProfilePicture.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        if(payload?.data?.success){
+        if (payload?.data?.success) {
           toast.success(payload?.data?.message);
         }
-        localStorage.setItem('user',JSON.stringify(payload?.data?.data))
+        localStorage.setItem("user", JSON.stringify(payload?.data?.data));
+      })
+      .addCase(instructorDashboardInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(instructorDashboardInfo.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (!payload?.data?.success) {
+          toast.error(payload?.data?.message);
+          return;
+        }
+        state.instructorData = payload?.data?.data;
       });
   },
 });
