@@ -73,7 +73,7 @@ exports.createCourse = async (req, res) => {
       course: newCourse,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({
       success: false,
       message: err.message,
@@ -81,13 +81,15 @@ exports.createCourse = async (req, res) => {
   }
 };
 exports.getAllCourses = async (req, res) => {
-  console.log(req.query)
+  console.log(req.query);
   try {
-  const filter={}
-    if(req.query.category){
-      filter.category=req.query.category
+    const filter = {};
+    if (req.query.category) {
+      filter.category = req.query.category;
     }
-    const course = await Course.find(filter).populate("instructor").populate('category');
+    const course = await Course.find(filter)
+      .populate("instructor")
+      .populate("category");
     res.status(200).json({
       success: true,
       message: "Course fetch successfully",
@@ -154,6 +156,22 @@ exports.updateCourse = async (req, res) => {
     res.status(500).json({
       success: false,
       message: err.message,
+    });
+  }
+};
+
+exports.getInstructorCourse = async (req, res) => {
+  try {
+    const courses = await Course.find({ instructor: req.user._id });
+    res.status(200).json({
+      success: true,
+      courses: courses,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: err,
     });
   }
 };

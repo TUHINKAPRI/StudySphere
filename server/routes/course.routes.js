@@ -4,6 +4,7 @@ const {
   createCourse,
   getCourseDetails,
   updateCourse,
+  getInstructorCourse,
 } = require("../controllers/course.controllers");
 const {
   auth,
@@ -37,6 +38,9 @@ courseRouter
   .route("/")
   .get(getAllCourses)
   .post(auth, isInstructor, createCourse);
+courseRouter
+  .route("/getInstructorCourses")
+  .get(auth, isInstructor, getInstructorCourse);
 courseRouter
   .route("/getSingleCourse/:courseId")
   .get(getCourseDetails)

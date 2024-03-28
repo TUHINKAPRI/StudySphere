@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../helper";
+import toast from "react-hot-toast";
 
 export const fetchCourseDetails = createAsyncThunk(
   "fetchCourseDetails",
@@ -8,9 +9,17 @@ export const fetchCourseDetails = createAsyncThunk(
   }
 );
 
+export const fetchInstructorCourse = createAsyncThunk(
+  "fetchInstructorCourse",
+  async () => {
+    return axiosInstance.get(`/course/getInstructorCourses`);
+  }
+);
+
 const initialState = {
   isLoading: false,
   courseDetails: null,
+  courses: [],
 };
 
 const courseSlice = createSlice({
@@ -27,6 +36,17 @@ const courseSlice = createSlice({
         if (payload?.data?.success) {
           state.courseDetails = payload?.data?.course;
         }
+      })
+      .addCase(fetchInstructorCourse.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchInstructorCourse.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (!payload?.data?.success) {
+          toast.error(payload?.data?.message);
+          return;
+        }
+        state.courses = payload?.data?.courses;
       });
   },
 });

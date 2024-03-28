@@ -23,10 +23,13 @@ function Dashboard() {
         <div>
           <div className="h-[70px] border-b-[1px]">
             <div className="text-center mt-5 text-2xl font-bold">
-              {path==='account-info'&& <>Account Details</>}
-              {path==='my-profile'&& <>Your Profile</>}
-              {path==='mycourse'&& <>Your Course</>}
-              {path==='wishlist'&& <>Wishlist</>}
+              {path === "account-info" && <>Account Details</>}
+              {path === "my-profile" && <>Your Profile</>}
+              {path === "mycourse" && <>Your Course</>}
+              {path === "wishlist" && <>Wishlist</>}
+              {path === "mycourses" && <>My courses</>}
+              {path==='add-course' && <>Add a new course</>}
+              {path==='instructor' && <>Instructor</>}
             </div>
           </div>
           <Outlet />
