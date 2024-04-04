@@ -5,7 +5,7 @@ const { imageUploader } = require("../utils/imageUploader");
 
 exports.createCourse = async (req, res) => {
   try {
-    const { name, description, whatWeWillLearn, price, tag, category } =
+    const { name, description, whatWeWillLearn, price, tags, category } =
       req.body;
     const thumbnail = req.files.thumbnail;
     if (

@@ -45,11 +45,13 @@ const courseSchema = new mongoose.Schema({
     ref: "Category",
     required: true,
   },
-  tag: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  tags: [
+    {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  ],
   status: {
     type: String,
     enum: ["draft", "published", "inactive"],

@@ -15,11 +15,10 @@ import Wishlist from "./components/core/dashboard/Wishlist";
 import AccountInfo from "./components/core/dashboard/AccountInfo";
 import { useSelector } from "react-redux";
 import Instructor from "./components/core/dashboard/instructorDashboard/Instructor";
-import AddCourse from "./components/core/dashboard/instructorDashboard/AddCourse";
 import EditCourse from "./components/core/dashboard/instructorDashboard/EditCourse";
-
 import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
 import MyCourses from "./components/core/dashboard/instructorDashboard/MyCourses";
+import AddCourse from "./components/core/course/addCourse/AddCourse";
 
 function App() {
   const { user } = useSelector((state) => state.auth);

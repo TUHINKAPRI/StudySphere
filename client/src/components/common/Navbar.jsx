@@ -5,7 +5,9 @@ import { useEffect } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCategory } from "../../services/slices/categorySlice";
+
 function Navbar() {
+  
   const dispatch = useDispatch();
   const { categories, isLoading } = useSelector((state) => state.categories);
   const { user } = useSelector((state) => state.auth);
@@ -16,12 +18,14 @@ function Navbar() {
   }, []);
   return (
     <div
-      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
+      className={`flex h-16 items-center justify-center border-b-[1px] border-b-richblack-700 ${
         location.pathname !== "/" ? "bg-richblack-800" : ""
       } transition-all duration-200 text-white`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
-        <div>StudySphere</div>
+        <div>
+          <img src="/capture.PNG" alt="Logo" className="h-[70px] mb-2" />
+        </div>
 
         <div className="flex gap-6">
           {linkData?.map((ele, index) => {
@@ -69,7 +73,7 @@ function Navbar() {
                         : "text-richblack-25"
                     }`}
                   >
-                    {ele.title}
+                    {ele?.title}
                   </Link>
                 )}
               </div>
@@ -138,8 +142,8 @@ function Navbar() {
               >
                 <div className="mx-4">
                   <span>Hello!</span>
-                  <span className="mx-1">{user.firstName}</span>
-                  <span>{user.lastName}</span>
+                  <span className="mx-1">{user?.firstName}</span>
+                  <span>{user?.lastName}</span>
                 </div>
                 <li className="flex"></li>
                 <li className="mx-2">

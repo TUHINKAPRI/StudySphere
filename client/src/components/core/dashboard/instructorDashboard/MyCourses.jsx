@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { VscAdd } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { fetchInstructorCourse } from "@/services/slices/courseSlice";
+import Tables from "@/components/common/Table";
 function MyCourses() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { courses } = useSelector((state) => state?.course);
+  console.log(courses);
   useEffect(() => {
     dispatch(fetchInstructorCourse());
   }, []);
@@ -25,7 +28,9 @@ function MyCourses() {
           </div>
         </Button>
       </div>
-      {/* {courses && <CoursesTable courses={courses} setCourses={setCourses} />} */}
+      <div className="w-10/12  mx-auto">
+        {courses && <Tables courses={courses} />}
+      </div>
     </div>
   );
 }

@@ -20,12 +20,18 @@ const initialState = {
   isLoading: false,
   courseDetails: null,
   courses: [],
+  step:1,
+  formCourseData:null
 };
 
 const courseSlice = createSlice({
   name: "courseSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setStep:(state,{payload})=>{
+        console.log(payload)
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCourseDetails.pending, (state) => {
@@ -52,3 +58,5 @@ const courseSlice = createSlice({
 });
 
 export default courseSlice.reducer;
+
+export const {setStep}=courseSlice.actions
